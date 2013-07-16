@@ -27,7 +27,7 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 
 	public void addPages(Wizard wizard) {
 		WizardPage page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");
-		page.setTitle("Hello Remote Service Host");
+		page.setTitle("Hello!!! Remote Service Host");
 		page.setDescription("This template creates and exports a Hello remote service");
 		wizard.addPage(page);
 		markPagesAdded();
