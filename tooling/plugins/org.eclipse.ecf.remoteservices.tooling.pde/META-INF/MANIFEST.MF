@@ -7,9 +7,11 @@ Bundle-Activator: org.eclipse.ecf.remoteservices.internal.tooling.pde.Activator
 Bundle-Vendor: %plugin.provider
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.pde.ui;bundle-version="3.7.1",
- org.eclipse.core.resources;bundle-version="3.8.1"
+ org.eclipse.pde.ui,
+ org.eclipse.core.resources
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
-Import-Package: org.eclipse.pde.core.plugin
+Import-Package: org.eclipse.pde.core.plugin,
+ org.eclipse.pde.ui,
+ org.eclipse.pde.ui.templates
