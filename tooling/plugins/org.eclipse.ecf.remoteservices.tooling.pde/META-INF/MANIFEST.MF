@@ -13,5 +13,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Import-Package: org.eclipse.pde.core.plugin,
- org.eclipse.pde.ui,
+ org.eclipse.pde.ui, 
  org.eclipse.pde.ui.templates
+Export-Package: org.eclipse.ecf.remoteservices.internal.tooling.pde
