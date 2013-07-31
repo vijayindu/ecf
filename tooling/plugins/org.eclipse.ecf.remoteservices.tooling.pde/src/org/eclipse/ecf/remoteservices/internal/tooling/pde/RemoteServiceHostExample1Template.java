@@ -38,7 +38,7 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 	//set page count of the wizard two
 		setPageCount(2);
 	//list of providers
-		String[][] ecf_providers = {{"0","ecf.base"},{"1","ecf.container.trivial"},{"2","ecf.generic.client"},{"3","ecf.discovery.jmdns"},{"4","ecf.generic.server"},{"5","ecf.filetransfer.bittorrent"},{"6","ecf.msn.msnp"},{"7","ecf.discovery.jslp"},{"9","ecf.msn.msnp"},{"10","ecf.xmpp.smack"}};
+		String[][] ecf_providers = {{"0","ECF Generic"},{"1","r-OSGi"},{"2","ecf.generic.server"},{"3","ecf.filetransfer.bittorrent"},{"4","ecf.msn.msnp"},{"5","ecf.discovery.jslp"},{"6","ecf.msn.msnp"},{"7","ecf.xmpp.smack"}};
 		addComboChoiceOption("containerID", "service.exported.configs", ecf_providers, "",0);
 		//addOption("containerType", "service.exported.configs", "ecf.generic.server", 0);		
 		//addOption("containerId", "ECF Generic Server URL", "", 1); 
@@ -76,7 +76,7 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 				page1.setDescription("Fill the values you need to for your remote");
 				wizard.addPage(page1);
 		
-	//	addOption("pathh", getStringOption("$containerType$"), "",1);
+	//	addOption("path", getStringOption("$containerType$"), "",1);
 		//addOption("containerId",test(), "ecftcp://localhost:3282/server", 1);
 				
 		}
