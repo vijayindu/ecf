@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.PageChangedEvent;
+import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
@@ -42,7 +43,7 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 
 	public RemoteServiceHostExample1Template() {
 		
-	setPageCount(2);//set page count of the wizard two	
+	setPageCount(3);//set page count of the wizard two	
 		
 	//read from the property file		
 		try {
@@ -83,21 +84,36 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 		  return array;
 		}
 
-
+	WizardPage page;
+	WizardPage page1;
+	WizardPage page2;
 	
 	public void addPages(Wizard wizard) {
 		
-		WizardPage page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");		
+	
+		
+		page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");		
 		page.setTitle("Hello! Remote Service Host");
 		page.setDescription("This template creates and exports a Hello remote service");		
-		wizard.addPage(page);
-		markPagesAdded();
 		
-		WizardPage page1 = createPage(1, "org.eclipse.pde.doc.user.rcp_mail");
-			
-				page1.setTitle("Values");
-				page1.setDescription("Fill the values you need to for your remote");
-				wizard.addPage(page1);
+	
+		
+		page1 = createPage(1, "org.eclipse.pde.doc.user.rcp_mail");
+		page1.setTitle("Values");
+		page1.setDescription("Fill the values you need to for your remote");
+		
+		
+		
+		page2 = createPage(2, "org.eclipse.pde.doc.user.rcp_mail");
+		page2.setTitle("Valuespage 2");
+		page2.setDescription("Fill the values you need to for your remote");
+		
+
+		wizard.addPage(page);		
+		wizard.getNextPage(page2);
+		wizard.addPage(page1);
+		wizard.addPage(page2);
+		
 		
 	//	addOption("path", getStringOption("$containerType$"), "",1);
 		//addOption("containerId",test(), "ecftcp://localhost:3282/server", 1);
@@ -107,9 +123,16 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 		
 	}
 	
-	public IWizardPage getNextPage(IWizardPage currentPage) {
+	
+public WizardPage getNextPage(WizardPage currentPage) {
 		   
-	    return null;
+		if (true) {
+		       System.out.println("sasd");
+		       
+			return page1;
+		    }
+		    
+		    return page2;
 	} 
 
 
