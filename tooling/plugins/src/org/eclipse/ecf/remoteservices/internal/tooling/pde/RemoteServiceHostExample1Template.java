@@ -26,6 +26,7 @@ import org.eclipse.pde.core.plugin.IPluginReference;
 import org.eclipse.pde.ui.IFieldData;
 import org.eclipse.pde.ui.templates.OptionTemplateSection;
 import org.eclipse.pde.ui.templates.TemplateOption;
+import org.eclipse.ui.actions.NewWizardAction;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.events.Event;
 
@@ -88,13 +89,26 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 	WizardPage page1;
 	WizardPage page2;
 	
+	 public void MyPageOne() {
+		 
+		 	page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");		
+			page.setTitle("Hello! Remote Service Host");
+			page.setDescription("This template creates and exports a Hello remote service");
+		  }
+	 
+
+
+
+
+	
+	
 	public void addPages(Wizard wizard) {
 		
 	
 		
-		page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");		
+		/*page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");		
 		page.setTitle("Hello! Remote Service Host");
-		page.setDescription("This template creates and exports a Hello remote service");		
+		page.setDescription("This template creates and exports a Hello remote service");	*/	
 		
 	
 		
@@ -108,7 +122,7 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 		page2.setTitle("Valuespage 2");
 		page2.setDescription("Fill the values you need to for your remote");
 		
-
+		
 		wizard.addPage(page);		
 		wizard.getNextPage(page2);
 		wizard.addPage(page1);
@@ -122,10 +136,19 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 		
 		
 	}
-	
-	
-public WizardPage getNextPage(WizardPage currentPage) {
+	public IWizardPage getNextPage(){
+		   	
 		   
+		     
+		       return page2 ;
+		   
+		   
+		}
+	
+/*public WizardPage getNextPage(WizardPage currentPage) {
+		   
+	
+	
 		if (true) {
 		       System.out.println("sasd");
 		       
@@ -134,7 +157,7 @@ public WizardPage getNextPage(WizardPage currentPage) {
 		    
 		    return page2;
 	} 
-
+*/
 
 
 	public URL getTemplateLocation() {
