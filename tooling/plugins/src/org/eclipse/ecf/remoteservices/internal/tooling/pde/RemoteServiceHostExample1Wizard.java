@@ -11,6 +11,7 @@ public class RemoteServiceHostExample1Wizard extends NewPluginTemplateWizard imp
 
 	public void init(IFieldData data) {
 		super.init(data);
+		
 		setWindowTitle("Remote Services Host Example Wizard");
 	}
 
@@ -25,6 +26,7 @@ public class RemoteServiceHostExample1Wizard extends NewPluginTemplateWizard imp
 	public IPluginReference[] getDependencies(String schemaVersion) {
 		return new IPluginReference[0];
 	}
+	
 
 }
 

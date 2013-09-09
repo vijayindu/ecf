@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.PageChangedEvent;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
@@ -26,6 +27,9 @@ import org.eclipse.pde.core.plugin.IPluginReference;
 import org.eclipse.pde.ui.IFieldData;
 import org.eclipse.pde.ui.templates.OptionTemplateSection;
 import org.eclipse.pde.ui.templates.TemplateOption;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.actions.NewWizardAction;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.events.Event;
@@ -36,11 +40,13 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 	private String packageName;
 	private String[][] Value_ecg_providers;	
 	private Properties providers=new Properties();//create the property file for the providers
+	private Object user_select_value;
 	int a=1;	// for testing
 
 /*	 public void handleEvent(Event event) {
 	      setPageComplete(validatePage());
 	   }*/
+	
 
 	public RemoteServiceHostExample1Template() {
 		
@@ -85,16 +91,12 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 		  return array;
 		}
 
-	WizardPage page;
-	WizardPage page1;
-	WizardPage page2;
 	
-	 public void MyPageOne() {
-		 
-		 	page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");		
-			page.setTitle("Hello! Remote Service Host");
-			page.setDescription("This template creates and exports a Hello remote service");
-		  }
+	
+	public WizardPage page1;
+	public WizardPage page2;
+	
+	 
 	 
 
 
@@ -104,60 +106,184 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 	
 	public void addPages(Wizard wizard) {
 		
-	
 		
-		/*page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");		
+		
+	/*	page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");		
 		page.setTitle("Hello! Remote Service Host");
-		page.setDescription("This template creates and exports a Hello remote service");	*/	
+		page.setDescription("This template creates and exports a Hello remote service");*/
 		
-	
 		
 		page1 = createPage(1, "org.eclipse.pde.doc.user.rcp_mail");
 		page1.setTitle("Values");
 		page1.setDescription("Fill the values you need to for your remote");
-		
+		addOption("containerId", "ECF Generic Server URL", "", 1); 
 		
 		
 		page2 = createPage(2, "org.eclipse.pde.doc.user.rcp_mail");
 		page2.setTitle("Valuespage 2");
 		page2.setDescription("Fill the values you need to for your remote");
 		
-		
-		wizard.addPage(page);		
-		wizard.getNextPage(page2);
+	
+		//wizard.addPage(page);			
 		wizard.addPage(page1);
-		wizard.addPage(page2);
+		
+		//System.out.print("hiu"+user_select_value);
+		
 		
 		
 	//	addOption("path", getStringOption("$containerType$"), "",1);
 		//addOption("containerId",test(), "ecftcp://localhost:3282/server", 1);
 				
 		
-		
+		IWizardPage paged1 = new IWizardPage() {
+			
+			@Override
+			public void setVisible(boolean visible) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void setTitle(String title) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void setImageDescriptor(ImageDescriptor image) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void setDescription(String description) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void performHelp() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public String getTitle() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getMessage() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public Image getImage() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getErrorMessage() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getDescription() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public Control getControl() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public void dispose() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void createControl(Composite parent) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void setWizard(IWizard wizard) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void setPreviousPage(IWizardPage page) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public boolean isPageComplete() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+			@Override
+			public IWizard getWizard() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public IWizardPage getPreviousPage() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public IWizardPage getNextPage() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public boolean canFlipToNextPage() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		};
+		wizard.addPage(paged1);
+		wizard.addPage(page2);
 		
 	}
-	public IWizardPage getNextPage(){
-		   	
-		   
-		     
-		       return page2 ;
-		   
-		   
-		}
+
+
 	
-/*public WizardPage getNextPage(WizardPage currentPage) {
-		   
+
+
 	
-	
-		if (true) {
-		       System.out.println("sasd");
-		       
-			return page1;
-		    }
-		    
-		    return page2;
-	} 
-*/
+
+
+	public Object getUser_select_value() {
+		return user_select_value;
+	}
+
+
+	public void setUser_select_value(Object user_select_value) {
+		this.user_select_value = user_select_value;
+		//user_select_value = page.
+	}
 
 
 	public URL getTemplateLocation() {
@@ -251,4 +377,8 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 		return Platform.getResourceBundle(Activator.getDefault().getBundle());
 	}
 
+	
+	
+	
 }
+
