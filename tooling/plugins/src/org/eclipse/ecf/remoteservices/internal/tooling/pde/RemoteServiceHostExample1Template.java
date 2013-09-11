@@ -48,7 +48,7 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 	   }*/
 	
 
-	public RemoteServiceHostExample1Template() {
+	public RemoteServiceHostExample1Template  () {
 		
 	setPageCount(3);//set page count of the wizard two	
 		
@@ -93,12 +93,35 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 
 	
 	
-	public WizardPage page1;
+	//public WizardPage page1;
 	public WizardPage page2;
+	//public WizardPage page;
+	//public Wizard wizard;
 	
-	 
-	 
+	public class MyPageOne extends WizardPage {
+		 
 
+		  public MyPageOne() {
+		    super("First Page");
+		    setTitle("First Page");
+		    setDescription("Fake Wizard. First page");
+		    createPage(0);
+		  }
+
+		@Override
+		public void createControl(Composite parent) {
+			
+			
+			// TODO Auto-generated method stub
+			
+		}
+		 		  
+		  }
+	public MyPageOne page1 = new MyPageOne();
+		 
+
+	 
+	
 
 
 
@@ -106,11 +129,11 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 	
 	public void addPages(Wizard wizard) {
 		
+		//Object data = getUser_select_value(); 
 		
-		
-	/*	page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");		
+		/*page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");		
 		page.setTitle("Hello! Remote Service Host");
-		page.setDescription("This template creates and exports a Hello remote service");*/
+		page.setDescription("This template creates and exports a Hello remote service");
 		
 		
 		page1 = createPage(1, "org.eclipse.pde.doc.user.rcp_mail");
@@ -121,12 +144,13 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 		
 		page2 = createPage(2, "org.eclipse.pde.doc.user.rcp_mail");
 		page2.setTitle("Valuespage 2");
-		page2.setDescription("Fill the values you need to for your remote");
+		page2.setDescription("Fill the values you need to for your remote");*/
 		
 	
-		//wizard.addPage(page);			
+			
+		//addPages(wizard);
 		wizard.addPage(page1);
-		
+		//wizard.aPage(page2);
 		//System.out.print("hiu"+user_select_value);
 		
 		
@@ -135,136 +159,8 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 		//addOption("containerId",test(), "ecftcp://localhost:3282/server", 1);
 				
 		
-		IWizardPage paged1 = new IWizardPage() {
-			
-			@Override
-			public void setVisible(boolean visible) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void setTitle(String title) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void setImageDescriptor(ImageDescriptor image) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void setDescription(String description) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void performHelp() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public String getTitle() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getMessage() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Image getImage() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getErrorMessage() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getDescription() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Control getControl() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public void dispose() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void createControl(Composite parent) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void setWizard(IWizard wizard) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void setPreviousPage(IWizardPage page) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public boolean isPageComplete() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public IWizard getWizard() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public IWizardPage getPreviousPage() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public IWizardPage getNextPage() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getName() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public boolean canFlipToNextPage() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		};
-		wizard.addPage(paged1);
-		wizard.addPage(page2);
+		
+	
 		
 	}
 
@@ -275,15 +171,15 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 	
 
 
-	public Object getUser_select_value() {
+/*	public Object getUser_select_value() {
 		return user_select_value;
 	}
 
 
 	public void setUser_select_value(Object user_select_value) {
 		this.user_select_value = user_select_value;
-		//user_select_value = page.
-	}
+		user_select_value = "jh";
+	}*/
 
 
 	public URL getTemplateLocation() {
