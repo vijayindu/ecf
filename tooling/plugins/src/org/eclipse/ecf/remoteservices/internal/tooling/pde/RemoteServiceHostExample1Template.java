@@ -1,62 +1,183 @@
 package org.eclipse.ecf.remoteservices.internal.tooling.pde;
 
-import java.awt.event.KeyEvent;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import javax.tools.OptionChecker;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.dialogs.PageChangedEvent;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.wizard.IWizard;
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.core.plugin.IPluginReference;
 import org.eclipse.pde.ui.IFieldData;
 import org.eclipse.pde.ui.templates.OptionTemplateSection;
-import org.eclipse.pde.ui.templates.TemplateOption;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.actions.NewWizardAction;
 import org.osgi.framework.Bundle;
-import org.w3c.dom.events.Event;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
+
+class RS_wizard_page1 extends WizardPage {
+	
+	private Text text1;
+	private Text text2;
+	private Text text3;
+	private Composite container;
+	public String[][] Value_ecg_providers;
+	public Properties providers = new Properties();// create the property file
+													// for the providers
+	public Object user_select_value;
+
+	public RS_wizard_page1(Object user_select_value ) {
+		super("Hello Remote Service Host");
+		setTitle("Hello Remote Service Host");
+		setDescription("This template creates and exports a Hello remote service");	
+		
+	}
+
+	@Override
+	public void createControl(Composite parent) {
+		
+		container = new Composite(parent, SWT.NONE);
+		GridLayout layout = new GridLayout();
+		container.setLayout(new GridLayout(4, false));
+		layout.numColumns = 6;
+		
+		Label label1 = new Label(container, SWT.NONE);
+		Label Host = new Label(container, SWT.NONE);
+		Label Port = new Label(container, SWT.NONE);
+		Label Path = new Label(container, SWT.NONE);
+		Host.setText("Host");
+		Port.setText("Port");
+		Path.setText("Path");
+		label1.setText("Put here a value");
+		
+		text1 = new Text(container, SWT.BORDER | SWT.SINGLE);
+		text1.setText("");
+		text2 = new Text(container, SWT.BORDER| SWT.SINGLE);
+		text2.setText("");
+		text3 = new Text(container, SWT.BORDER| SWT.SINGLE);
+		text3.setText("");
+		
+		text1.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (!text1.getText().isEmpty()) {
+					setPageComplete(true);
+
+				}
+			}
+
+		});
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		text1.setLayoutData(gd);
+		// Required to avoid an error in the system
+		setControl(container);
+		setPageComplete(false);
+
+	}
+
+	public String getText1() {
+		return text1.getText();
+	}
+}
+
+class MyPageTwo extends WizardPage {
+	private Text text1;
+	private Composite container;
+
+	public MyPageTwo() {
+		super("Second Page");
+		setTitle("Second Page");
+		setDescription("Now this is the second page");
+		setControl(text1);
+	}
+
+	@Override
+	public void createControl(Composite parent) {
+		container = new Composite(parent, SWT.NONE);
+		GridLayout layout = new GridLayout();
+		container.setLayout(layout);
+		layout.numColumns = 2;
+		Label label1 = new Label(container, SWT.NONE);
+		label1.setText("Say hello to Fred");
+
+		text1 = new Text(container, SWT.BORDER | SWT.SINGLE);
+		text1.setText("");
+		text1.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (!text1.getText().isEmpty()) {
+					setPageComplete(true);
+				}
+			}
+
+		});
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		text1.setLayoutData(gd);
+		Label labelCheck = new Label(container, SWT.NONE);
+		labelCheck.setText("This is a check");
+		Button check = new Button(container, SWT.CHECK);
+		check.setSelection(true);
+		// Required to avoid an error in the system
+		setControl(container);
+		setPageComplete(false);
+	}
+
+	public String getText1() {
+		return text1.getText();
+	}
+}
 
 public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 
-	private String packageName;
-	private String[][] Value_ecg_providers;	
-	private Properties providers=new Properties();//create the property file for the providers
-	private Object user_select_value;
-	int a=1;	// for testing
+	public String packageName;
 
-/*	 public void handleEvent(Event event) {
-	      setPageComplete(validatePage());
-	   }*/
-	
+	public String[][] Value_ecg_providers;
+	public Properties providers = new Properties();// create the property file
+													// for the providers
+	public Object user_select_value;
 
-	public RemoteServiceHostExample1Template  () {
+	public RemoteServiceHostExample1Template() {
+		setPageCount(3);
 		
-	setPageCount(3);//set page count of the wizard two	
-		
-	//read from the property file		
+	// read from the property file
 		try {
-			providers.load(RemoteServiceConsumerExample1Template.class.getClassLoader().getResourceAsStream("providers.properties"));
-			Value_ecg_providers = fetchArrayFromPropFile("ecf_providers",providers);			
-			
+			providers.load(RemoteServiceConsumerExample1Template.class
+					.getClassLoader().getResourceAsStream(
+							"providers.properties"));
+			Value_ecg_providers = fetchArrayFromPropFile("ecf_providers",
+					providers);
+
 		} catch (FileNotFoundException e) {
 			System.out.print("Property file not found");
 			// TODO Auto-generated catch block
@@ -65,126 +186,53 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-	
-		addComboChoiceOption("containerID", "service.exported.configs", Value_ecg_providers, "",0);
-		//addOption("containerType", "service.exported.configs", "ecf.generic.server", 0);		
-		//addOption("containerId", "ECF Generic Server URL", "", 1); 
-		//addOption("host", "host", "", 1);
-		//addOption("port", "Port", "", 1);
-		//addOption("path","Path","", 1);
-		//TemplateOption[] option=getOptions(1);
-		
-		
-	
+
 	}
-	
-	
-	//to get data from the property file
-	private static String[][] fetchArrayFromPropFile(String propertyName, Properties propFile) {
-		  String[] a = propFile.getProperty(propertyName).split(";");
-		  String[][] array = new String[a.length][a.length];
-		  for(int i = 0;i < a.length;i++) {
-		    array[i] = a[i].split(",");
-		  }
-		  return array;
+
+	// to get data from the property file
+	private static String[][] fetchArrayFromPropFile(String propertyName,
+			Properties propFile) {
+		String[] a = propFile.getProperty(propertyName).split(";");
+		String[][] array = new String[a.length][a.length];
+		for (int i = 0; i < a.length; i++) {
+			array[i] = a[i].split(",");
 		}
+		return array;
+	}
 
-	
-	
-	//public WizardPage page1;
-	public WizardPage page2;
-	//public WizardPage page;
-	//public Wizard wizard;
-	
-	public class MyPageOne extends WizardPage {
-		 
-
-		  public MyPageOne() {
-		    super("First Page");
-		    setTitle("First Page");
-		    setDescription("Fake Wizard. First page");
-		    createPage(0);
-		  }
-
-		@Override
-		public void createControl(Composite parent) {
-			
-			
-			// TODO Auto-generated method stub
-			
-		}
-		 		  
-		  }
-	public MyPageOne page1 = new MyPageOne();
-		 
-
-	 
-	
-
-
-
-	
-	
 	public void addPages(Wizard wizard) {
 		
-		//Object data = getUser_select_value(); 
-		
-		/*page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");		
-		page.setTitle("Hello! Remote Service Host");
+		//creation of first page
+		WizardPage page = createPage(0, "org.eclipse.pde.doc.user.rcp_mail");
+		page.setTitle("Hello Remote Service Host");
 		page.setDescription("This template creates and exports a Hello remote service");
-		
-		
-		page1 = createPage(1, "org.eclipse.pde.doc.user.rcp_mail");
-		page1.setTitle("Values");
-		page1.setDescription("Fill the values you need to for your remote");
-		addOption("containerId", "ECF Generic Server URL", "", 1); 
-		
-		
-		page2 = createPage(2, "org.eclipse.pde.doc.user.rcp_mail");
-		page2.setTitle("Valuespage 2");
-		page2.setDescription("Fill the values you need to for your remote");*/
-		
-	
-			
-		//addPages(wizard);
-		wizard.addPage(page1);
-		//wizard.aPage(page2);
-		//System.out.print("hiu"+user_select_value);
-		
-		
-		
-	//	addOption("path", getStringOption("$containerType$"), "",1);
-		//addOption("containerId",test(), "ecftcp://localhost:3282/server", 1);
-				
-		
-		
-	
-		
+		addComboChoiceOption("containerID", "service.exported.configs",
+				Value_ecg_providers, "", 0);	
+		addOption("containerId", "ECF Generic Server URL", "ecftcp://localhost:3282/server", 0); 
+		wizard.addPage(page);		
+		RS_wizard_page1 one;
+		MyPageTwo two;
+		one = new RS_wizard_page1(user_select_value);
+		two = new MyPageTwo();
+		wizard.addPage(one);
+		//wizard.addPage(two);
+		markPagesAdded();
 	}
 
-
-	
-
-
-	
-
-
-/*	public Object getUser_select_value() {
+	// get the value set by user
+	public Object getUser_select_value() {
 		return user_select_value;
 	}
 
-
+	// set the user value
 	public void setUser_select_value(Object user_select_value) {
 		this.user_select_value = user_select_value;
-		user_select_value = "jh";
-	}*/
-
+		user_select_value = getValue("containerId");
+	}
 
 	public URL getTemplateLocation() {
 		Bundle b = Activator.getDefault().getBundle();
-		String path = "/templates/"+getSectionId();
+		String path = "/templates/" + getSectionId();
 		URL url = b.getEntry(path);
 		if (url != null)
 			try {
@@ -196,12 +244,10 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 	}
 
 	public String getSectionId() {
-		
-		//return "helloRemoteServiceHostExample1"; //$NON-NLS-1$
-		return "helloRemoteServiceConsumerExample1"; //$NON-NLS-1$
+		return "helloRemoteServiceHostExample1"; //$NON-NLS-1$
 	}
 
-	protected void updateModel(IProgressMonitor monitor) { 
+	protected void updateModel(IProgressMonitor monitor) {
 	}
 
 	public String getUsedExtensionPoint() {
@@ -234,7 +280,6 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 		}
 		return buffer.toString().toLowerCase(Locale.ENGLISH);
 	}
-
 
 	protected void initializeFields(IFieldData data) {
 		// In a new project wizard, we don't know this yet - the
@@ -273,8 +318,4 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 		return Platform.getResourceBundle(Activator.getDefault().getBundle());
 	}
 
-	
-	
-	
 }
-
