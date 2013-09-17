@@ -8,8 +8,6 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-import javax.tools.OptionChecker;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.wizard.Wizard;
@@ -20,32 +18,25 @@ import org.eclipse.pde.ui.IFieldData;
 import org.eclipse.pde.ui.templates.OptionTemplateSection;
 import org.eclipse.swt.widgets.Composite;
 import org.osgi.framework.Bundle;
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 
 class RS_wizard_page1 extends WizardPage {
 	
-	private Text text1;
-	private Text text2;
-	private Text text3;
+	private Text host;
+	private Text port;
+	private Text path;
+	public String server_url;
 	private Composite container;
-	public String[][] Value_ecg_providers;
-	public Properties providers = new Properties();// create the property file
-													// for the providers
-	public Object user_select_value;
-
-	public RS_wizard_page1(Object user_select_value ) {
+	
+		public RS_wizard_page1(Object user_select_value ) {
 		super("Hello Remote Service Host");
 		setTitle("Hello Remote Service Host");
 		setDescription("This template creates and exports a Hello remote service");	
@@ -57,26 +48,31 @@ class RS_wizard_page1 extends WizardPage {
 		
 		container = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout();
-		container.setLayout(new GridLayout(4, false));
-		layout.numColumns = 6;
+		container.setLayout(new GridLayout(2,false));
+		layout.numColumns = 2;
 		
-		Label label1 = new Label(container, SWT.NONE);
+		Label example = new Label(container, SWT.NONE);		
+		example.setText("ecftcp://localhost:3282/server");
+
+		
 		Label Host = new Label(container, SWT.NONE);
-		Label Port = new Label(container, SWT.NONE);
-		Label Path = new Label(container, SWT.NONE);
 		Host.setText("Host");
+		host = new Text(container, SWT.BORDER | SWT.SINGLE);
+		host.setText("");
+		
+		Label Port = new Label(container, SWT.NONE);
 		Port.setText("Port");
+		port = new Text(container, SWT.BORDER| SWT.SINGLE);
+		port.setText("");
+		
+		Label Path = new Label(container, SWT.NONE);		
 		Path.setText("Path");
-		label1.setText("Put here a value");
+		path = new Text(container, SWT.BORDER| SWT.SINGLE);
+		path.setText("");
 		
-		text1 = new Text(container, SWT.BORDER | SWT.SINGLE);
-		text1.setText("");
-		text2 = new Text(container, SWT.BORDER| SWT.SINGLE);
-		text2.setText("");
-		text3 = new Text(container, SWT.BORDER| SWT.SINGLE);
-		text3.setText("");
 		
-		text1.addKeyListener(new KeyListener() {
+		
+		host.addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -84,15 +80,52 @@ class RS_wizard_page1 extends WizardPage {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (!text1.getText().isEmpty()) {
+				if (!host.getText().isEmpty()) {
 					setPageComplete(true);
 
 				}
 			}
 
 		});
+		
+		port.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyReleased(KeyEvent e) {			
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (!port.getText().isEmpty()) {
+					setPageComplete(true);
+
+				}
+				
+			}
+		});
+		
+		path.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+								
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (!path.getText().isEmpty()) {
+					setPageComplete(true);
+
+				}
+			}
+		});
+		
+		
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		text1.setLayoutData(gd);
+		host.setLayoutData(gd);
+		port.setLayoutData(gd);
+		path.setLayoutData(gd);
 		// Required to avoid an error in the system
 		setControl(container);
 		setPageComplete(false);
@@ -100,8 +133,29 @@ class RS_wizard_page1 extends WizardPage {
 	}
 
 	public String getText1() {
-		return text1.getText();
+		return host.getText();
 	}
+
+	public String getText2() {
+		return port.getText();
+	}
+
+	public String getText3() {
+		return path.getText();
+	}
+
+	public String getServer_url() {
+		return server_url;
+	}
+
+	public void setServer_url(String server_url) {
+		this.server_url = server_url;
+		server_url= getText1()+getText2()+getText3();
+	}
+	
+	
+	
+	
 }
 
 class MyPageTwo extends WizardPage {
@@ -209,15 +263,25 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 		addComboChoiceOption("containerID", "service.exported.configs",
 				Value_ecg_providers, "", 0);	
 		addOption("containerId", "ECF Generic Server URL", "ecftcp://localhost:3282/server", 0); 
-		wizard.addPage(page);		
+		wizard.addPage(page);	
+		
+		
 		RS_wizard_page1 one;
 		MyPageTwo two;
+		
 		one = new RS_wizard_page1(user_select_value);
 		two = new MyPageTwo();
+		page.getNextPage();
+		if(user_select_value=="ecftcp://localhost:3282/server"){
+		//wizard.getNextPage(page);
 		wizard.addPage(one);
+		}
+
 		//wizard.addPage(two);
 		markPagesAdded();
+		
 	}
+	
 
 	// get the value set by user
 	public Object getUser_select_value() {
@@ -227,7 +291,7 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 	// set the user value
 	public void setUser_select_value(Object user_select_value) {
 		this.user_select_value = user_select_value;
-		user_select_value = getValue("containerId");
+		user_select_value = "containerIdf";
 	}
 
 	public URL getTemplateLocation() {
