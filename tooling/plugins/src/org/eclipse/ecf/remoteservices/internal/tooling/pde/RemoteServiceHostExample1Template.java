@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
@@ -35,11 +36,13 @@ class RS_wizard_page1 extends WizardPage {
 	private Text path;
 	public String server_url;
 	private Composite container;
+	private Object user_select_value;
 	
 		public RS_wizard_page1(Object user_select_value ) {
 		super("Hello Remote Service Host");
+		this.user_select_value = user_select_value;
 		setTitle("Hello Remote Service Host");
-		setDescription("This template creates and exports a Hello remote service");	
+		setDescription("Enter data for your server");	
 		
 	}
 
@@ -48,11 +51,11 @@ class RS_wizard_page1 extends WizardPage {
 		
 		container = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout();
-		container.setLayout(new GridLayout(2,false));
-		layout.numColumns = 2;
+		container.setLayout(new GridLayout(1,false));
+		layout.numColumns = 1;
 		
 		Label example = new Label(container, SWT.NONE);		
-		example.setText("ecftcp://localhost:3282/server");
+		example.setText("Example             ecftcp://localhost:3282/server");
 
 		
 		Label Host = new Label(container, SWT.NONE);
@@ -143,7 +146,7 @@ class RS_wizard_page1 extends WizardPage {
 	public String getText3() {
 		return path.getText();
 	}
-
+//to get the full server url
 	public String getServer_url() {
 		return server_url;
 	}
@@ -153,64 +156,16 @@ class RS_wizard_page1 extends WizardPage {
 		server_url= getText1()+getText2()+getText3();
 	}
 	
-	
-	
-	
-}
-
-class MyPageTwo extends WizardPage {
-	private Text text1;
-	private Composite container;
-
-	public MyPageTwo() {
-		super("Second Page");
-		setTitle("Second Page");
-		setDescription("Now this is the second page");
-		setControl(text1);
-	}
-
 	@Override
-	public void createControl(Composite parent) {
-		container = new Composite(parent, SWT.NONE);
-		GridLayout layout = new GridLayout();
-		container.setLayout(layout);
-		layout.numColumns = 2;
-		Label label1 = new Label(container, SWT.NONE);
-		label1.setText("Say hello to Fred");
-
-		text1 = new Text(container, SWT.BORDER | SWT.SINGLE);
-		text1.setText("");
-		text1.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				if (!text1.getText().isEmpty()) {
-					setPageComplete(true);
-				}
-			}
-
-		});
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		text1.setLayoutData(gd);
-		Label labelCheck = new Label(container, SWT.NONE);
-		labelCheck.setText("This is a check");
-		Button check = new Button(container, SWT.CHECK);
-		check.setSelection(true);
-		// Required to avoid an error in the system
-		setControl(container);
-		setPageComplete(false);
+	public IWizardPage getNextPage() {
+		// TODO Auto-generated method stub
+		return super.getNextPage();
 	}
-
-	public String getText1() {
-		return text1.getText();
-	}
+	
+	
+	
 }
+
 
 public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 
@@ -221,6 +176,7 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 													// for the providers
 	public Object user_select_value;
 
+	
 	public RemoteServiceHostExample1Template() {
 		setPageCount(3);
 		
@@ -262,37 +218,32 @@ public class RemoteServiceHostExample1Template extends OptionTemplateSection {
 		page.setDescription("This template creates and exports a Hello remote service");
 		addComboChoiceOption("containerID", "service.exported.configs",
 				Value_ecg_providers, "", 0);	
-		addOption("containerId", "ECF Generic Server URL", "ecftcp://localhost:3282/server", 0); 
-		wizard.addPage(page);	
+		 
+		wizard.addPage(page);
 		
-		
+				
 		RS_wizard_page1 one;
-		MyPageTwo two;
-		
 		one = new RS_wizard_page1(user_select_value);
-		two = new MyPageTwo();
-		page.getNextPage();
-		if(user_select_value=="ecftcp://localhost:3282/server"){
-		//wizard.getNextPage(page);
 		wizard.addPage(one);
-		}
-
-		//wizard.addPage(two);
+		
+		
 		markPagesAdded();
+		System.out.println("d"+getValue("containerID"));
 		
 	}
 	
+	
 
-	// get the value set by user
-	public Object getUser_select_value() {
-		return user_select_value;
-	}
 
 	// set the user value
 	public void setUser_select_value(Object user_select_value) {
 		this.user_select_value = user_select_value;
-		user_select_value = "containerIdf";
+		user_select_value = getValue("containerId");
 	}
+	// get the value set by user
+		public Object getUser_select_value() {
+			return user_select_value;
+		}
 
 	public URL getTemplateLocation() {
 		Bundle b = Activator.getDefault().getBundle();
